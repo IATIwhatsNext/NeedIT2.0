@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NeedIT</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">Need IT</string>
+    <string name="availableIndicationString">Available </string>
+    <string name="helpBtnString">HELP!</string>
 </resources>
