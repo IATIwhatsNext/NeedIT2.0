@@ -20,4 +20,10 @@
     <string name="title_activity_main">Need IT</string>
     <string name="availableIndicationString">Available </string>
     <string name="helpBtnString">HELP!</string>
+    <string name="cockroachHelp">Get help with cockroach</string>
+    <string name="glassSugar">Need glass of sugar</string>
+    <string name="carCables">Get help with car cables</string>
+    <string name="moving">Need help in moving</string>
+    <string name="navigation">Need help with nevigation</string>
+    <string name="sugar">Need glass sugar</string>
 </resources>
