@@ -2,6 +2,7 @@ package mydomain.needit;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.Toast;
-import android.content.Intent;
+
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,8 @@ public class MainActivity extends Activity
 
 
     protected boolean isAvailable = false;
-    private String userID;
+    private String userID = "";
+
     /**
      * Send a  notification service.
      */
@@ -54,8 +57,15 @@ public class MainActivity extends Activity
 
         String userName = intent.getStringExtra("userName");
         String userLastName = intent.getStringExtra("userLastName");
+        this.userID = userName + userLastName;
 
-        Toast.makeText(this, "Hello " + userName + " "+userLastName, Toast.LENGTH_LONG).show();
+        InMemoryDB.registerUpdate(InMemoryDB.Type.USERS, new Runnable() {
+            @Override
+            public void run() {
+                drawUsersOnMap(InMemoryDB.getUserLocations());
+            }
+        });
+        Toast.makeText(this, "Hello " + userName + " " + userLastName, Toast.LENGTH_LONG).show();
 
         Switch availableIndicationSwitch = (Switch) findViewById(R.id.availableIndication);
         availableIndicationSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -66,7 +76,7 @@ public class MainActivity extends Activity
         });
 
         startNotification(this.getWindow().getDecorView().findViewById(android.R.id.content));
-       
+
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
@@ -75,14 +85,14 @@ public class MainActivity extends Activity
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
 
-        drawUsersOnMap(getUsersLocations()); //TODO: remove this after server updates the map
+        drawUsersOnMap(InMemoryDB.getUserLocations()); //TODO: remove this after server updates the map
 
         Button helpBtn = (Button) findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent helpActivity = new Intent(getApplicationContext(), HelpSourcesActivity.class);
-            startActivity(helpActivity);
+                Intent helpActivity = new Intent(getApplicationContext(), HelpSourcesActivity.class);
+                startActivity(helpActivity);
             }
         });
 
@@ -95,14 +105,15 @@ public class MainActivity extends Activity
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .addApi(AppIndex.API).build();
+            LocationProvider.init(mGoogleApiClient, userID);
         }
     }
 
-    public void drawUsersOnMap(Map<String, LatLng> usersMap) {
-        for (Map.Entry<String, LatLng> entry: usersMap.entrySet()) {
+    public void drawUsersOnMap(List<UserLocation> userLocations) {
+        for (UserLocation location : userLocations) {
             mMap.addMarker(new MarkerOptions()
-                    .position(entry.getValue())
-                    .title(entry.getKey()));
+                    .position(location.getLocation())
+                    .title(location.getUserID()));
         }
     }
 
@@ -126,15 +137,16 @@ public class MainActivity extends Activity
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
             if (mLastLocation != null) {
-                LatLng myLocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+                LatLng myLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-                Toast.makeText(this, myLocation.toString() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, myLocation.toString(), Toast.LENGTH_SHORT).show();
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,15));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
                 //TODO: should call server with my current location
             }
         }
     }
+
     @Override
     public void onConnectionSuspended(int cause) {
         // We are not connected anymore!
@@ -146,13 +158,13 @@ public class MainActivity extends Activity
     }
 
     //TODO: this is a temp function, should remove this once the server is ready
-    public Map<String, LatLng> getUsersLocations(){
-        Map<String,LatLng> users = new HashMap<>();
+    public Map<String, LatLng> getUsersLocations() {
+        Map<String, LatLng> users = new HashMap<>();
 
-        users.put("Shahar", new LatLng(32.1,34.85));
-        users.put("Michal", new LatLng(32.1,34.86));
-        users.put("Shirly", new LatLng(32.1,34.87));
-        users.put("Katy", new LatLng(32.1,34.88));
+        users.put("Shahar", new LatLng(32.1, 34.85));
+        users.put("Michal", new LatLng(32.1, 34.86));
+        users.put("Shirly", new LatLng(32.1, 34.87));
+        users.put("Katy", new LatLng(32.1, 34.88));
 
         return users;
     }
@@ -162,10 +174,6 @@ public class MainActivity extends Activity
         super.onDestroy();
         Intent intentService = new Intent(this, NotificationService.class);
         stopService(intentService);
-    }
-
-    public void updateMap(List<UserLocation> userLocations){
-
     }
 
     public String getUserID() {

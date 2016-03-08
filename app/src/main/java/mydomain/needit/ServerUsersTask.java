@@ -23,18 +23,16 @@ import java.util.Map;
  * Created by Michal on 08/03/2016.
  */
 public class ServerUsersTask extends AsyncTask<MainActivity, String, List<UserLocation>> {
-    private MainActivity activity;
 
     @Override
-    protected void onPostExecute(List<UserLocation> stringLatLngMap) {
-        super.onPostExecute(stringLatLngMap);
-        Log.w("!!!!", stringLatLngMap.toString());
-        activity.updateMap(stringLatLngMap);
+    protected void onPostExecute(List<UserLocation> users) {
+        super.onPostExecute(users);
+        Log.w("!!!!", users.toString());
+        InMemoryDB.setUserLocations(users);
     }
 
     @Override
     protected List<UserLocation> doInBackground(MainActivity... params) {
-        activity = params[0];
         try {
             return getUsersFromServer();
         } catch (IOException e) {
@@ -77,7 +75,7 @@ public class ServerUsersTask extends AsyncTask<MainActivity, String, List<UserLo
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                result.add(new UserLocation(jsonObject.getString("userID"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY"))));
+                result.add(new UserLocation(jsonObject.getString("userId"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY"))));
                 Log.w("!!!!!", jsonObject.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();

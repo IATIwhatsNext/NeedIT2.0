@@ -14,26 +14,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Michal on 08/03/2016.
  */
-public class ServerRequestTask extends AsyncTask<MainActivity, String, Map<UserLocation, String>> {
+public class ServerRequestTask extends AsyncTask<MainActivity, String, List<Request>> {
     private MainActivity activity;
 
     @Override
-    protected void onPostExecute(Map<UserLocation, String> stringLatLngMap) {
-        super.onPostExecute(stringLatLngMap);
-        Log.w("!!!!", stringLatLngMap.toString());
+    protected void onPostExecute(List<Request> requests) {
+        super.onPostExecute(requests);
+        InMemoryDB.setRequests(requests);
+        Log.w("test", requests.toString());
 
     }
 
     @Override
-    protected Map<UserLocation, String> doInBackground(MainActivity... params) {
-        activity = params[0];
+    protected List<Request> doInBackground(MainActivity... params) {
         try {
             return getRequestsFromServer();
         } catch (IOException e) {
@@ -42,23 +41,23 @@ public class ServerRequestTask extends AsyncTask<MainActivity, String, Map<UserL
         return null;
     }
 
-    public static Map<UserLocation, String> getRequestsFromServer() throws IOException {
+    public static List<Request> getRequestsFromServer() throws IOException {
         try {
             URL url = new URL("http://needit2.azurewebsites.net/api/user/requests");
-            Log.w("!!!!!", "here");
+            Log.w("test!", "here");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            Log.w("!!!!!", "connected");
+            Log.w("test!", "connected");
             try {
-                Log.w("!!!!!", "trying");
+                Log.w("test!", "trying");
 
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                Log.w("!!!!!", "read data: " + bufferedReader.toString());
+                Log.w("test!", "read data: " + bufferedReader.toString());
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line).append("\n");
                 }
-                Log.w("!!!!!", stringBuilder.toString());
+                Log.w("test!", stringBuilder.toString());
                 bufferedReader.close();
                 JSONArray jsonArray = new JSONArray(stringBuilder.toString());
                 return parseUserJSON(jsonArray);
@@ -66,18 +65,21 @@ public class ServerRequestTask extends AsyncTask<MainActivity, String, Map<UserL
                 urlConnection.disconnect();
             }
         } catch (Exception e) {
-            Log.w("!!!!!", e.toString());
+            Log.w("test!", e.toString());
             return null;
         }
     }
 
-    public static Map<UserLocation, String> parseUserJSON(JSONArray jsonArray) {
-        Map<UserLocation, String> result = new HashMap<>();
+    public static List<Request> parseUserJSON(JSONArray jsonArray) {
+        List<Request> result = new LinkedList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                result.put(new UserLocation(jsonObject.getString("userID"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY"))), jsonObject.getString("response"));
-                Log.w("!!!!!", jsonObject.getString("name"));
+                result.add(new Request(new UserLocation(jsonObject.getString("userId"),
+                                                        new LatLng(jsonObject.getLong("locationX"),
+                                                        jsonObject.getLong("locationY"))),
+                                jsonObject.getString("response")));
+                Log.w("test", jsonObject.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

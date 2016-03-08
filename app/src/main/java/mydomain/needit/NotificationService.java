@@ -9,12 +9,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 /**
  * Created by dimitrke on 07/03/2016.
  */
-public class NotificationService extends Service{
+public class NotificationService extends Service {
 
     public static final int NOTIFICATION_ID = 1;
 
@@ -25,26 +24,28 @@ public class NotificationService extends Service{
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId){
-      //  Toast.makeText(this,"Started",Toast.LENGTH_LONG).show();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //  Toast.makeText(this,"Started",Toast.LENGTH_LONG).show();
 
-        final Handler  h = new Handler();
+        final Handler h = new Handler();
         final int delay = 10000; //milliseconds
 
         h.postDelayed(new Runnable() {
             public void run() {
                 sendNotification();
+                InMemoryDB.update();
                 h.postDelayed(this, delay);
             }
         }, delay);
         return START_STICKY;
     }
-     @Override
-    public void onDestroy(){
-         super.onDestroy();
-  //       Toast.makeText(this,"Stop",Toast.LENGTH_LONG).show();
 
-     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //       Toast.makeText(this,"Stop",Toast.LENGTH_LONG).show();
+
+    }
 
     public void sendNotification() {
 
@@ -64,6 +65,7 @@ public class NotificationService extends Service{
         builder.setAutoCancel(true);
         builder.addAction(R.drawable.reject, "Reject", pendingIntent);
         builder.addAction(R.drawable.ok, "Accept", pendingIntentAccept);
+        //todo: add call ServerPostResponseTesk.execute()
 
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setContentTitle("Need It -Notifications");

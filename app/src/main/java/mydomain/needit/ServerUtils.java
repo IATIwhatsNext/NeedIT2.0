@@ -54,7 +54,7 @@ public class ServerUtils {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                result.put(jsonObject.getString("userID"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY")));
+                result.put(jsonObject.getString("userId"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY")));
                 Log.w("!!!!!", jsonObject.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();

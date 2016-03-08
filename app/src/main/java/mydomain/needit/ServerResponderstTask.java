@@ -15,32 +15,33 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Michal on 08/03/2016.
  */
-public class ServerResponderstTask extends AsyncTask<MainActivity, String, Map<UserLocation, String>> {
-    private MainActivity activity;
+public class ServerResponderstTask extends AsyncTask<MainActivity, String, List<Response>> {
 
     @Override
-    protected void onPostExecute(Map<UserLocation, String> stringLatLngMap) {
-        super.onPostExecute(stringLatLngMap);
-        Log.w("!!!!", stringLatLngMap.toString());
+    protected void onPostExecute(List<Response> responses) {
+        super.onPostExecute(responses);
+        InMemoryDB.setResponses(responses);
+        Log.w("!!!!", responses.toString());
     }
 
     @Override
-    protected Map<UserLocation, String> doInBackground(MainActivity... params) {
-        activity = params[0];
+    protected List<Response> doInBackground(MainActivity... params) {
         try {
-            return getUserResponses(activity.getUserID());
+            return getUserResponses("userID");//todo:real user id
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Map<UserLocation, String> getUserResponses(String userID) throws IOException {
+    public static List<Response> getUserResponses(String userID) throws IOException {
         try {
             URL url = new URL("http://needit2.azurewebsites.net/api/user/Responses?id=" + userID);
             Log.w("!!!!!", "here");
@@ -70,12 +71,13 @@ public class ServerResponderstTask extends AsyncTask<MainActivity, String, Map<U
     }
 
 
-    public static Map<UserLocation, String> parseUserJSON(JSONArray jsonArray) {
-        Map<UserLocation, String> result = new HashMap<>();
+    public static List<Response> parseUserJSON(JSONArray jsonArray) {
+        List<Response> result = new LinkedList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                result.put(new UserLocation(jsonObject.getString("userID"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY"))), jsonObject.getString("responseToUser"));
+                result.add(new Response(
+                        new UserLocation(jsonObject.getString("userId"), new LatLng(jsonObject.getLong("locationX"), jsonObject.getLong("locationY"))), jsonObject.getString("responseToUser")));
                 Log.w("!!!!!", jsonObject.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
