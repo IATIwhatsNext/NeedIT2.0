@@ -48,6 +48,13 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+
+        String userName = intent.getStringExtra("userName");
+        String userLastName = intent.getStringExtra("userLastName");
+
+        Toast.makeText(this, "Hello " + userName + " "+userLastName, Toast.LENGTH_LONG).show();
+
         Switch availableIndicationSwitch = (Switch) findViewById(R.id.availableIndication);
         availableIndicationSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
