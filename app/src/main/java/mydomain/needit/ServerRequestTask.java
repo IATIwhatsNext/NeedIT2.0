@@ -9,11 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,41 +30,13 @@ public class ServerRequestTask extends AsyncTask<MainActivity, String, List<Requ
     @Override
     protected List<Request> doInBackground(MainActivity... params) {
         try {
-            return getRequestsFromServer();
+            return parseUserJSON(ServerUtil.getFromServer("http://needit2.azurewebsites.net/api/user/requests"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static List<Request> getRequestsFromServer() throws IOException {
-        try {
-            URL url = new URL("http://needit2.azurewebsites.net/api/user/requests");
-            Log.w("test!", "here");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            Log.w("test!", "connected");
-            try {
-                Log.w("test!", "trying");
-
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                Log.w("test!", "read data: " + bufferedReader.toString());
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
-                }
-                Log.w("test!", stringBuilder.toString());
-                bufferedReader.close();
-                JSONArray jsonArray = new JSONArray(stringBuilder.toString());
-                return parseUserJSON(jsonArray);
-            } finally {
-                urlConnection.disconnect();
-            }
-        } catch (Exception e) {
-            Log.w("test!", e.toString());
-            return null;
-        }
-    }
 
     public static List<Request> parseUserJSON(JSONArray jsonArray) {
         List<Request> result = new LinkedList<>();

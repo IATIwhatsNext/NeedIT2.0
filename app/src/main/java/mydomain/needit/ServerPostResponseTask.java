@@ -22,7 +22,7 @@ public class ServerPostResponseTask extends AsyncTask<Response, String, String> 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        PostUtils.sendHTTPData("http://needit2.azurewebsites.net/api/user/response", jsonObject);
+        ServerUtil.sendHTTPData("http://needit2.azurewebsites.net/api/user/response", jsonObject);
         return "";
     }
 

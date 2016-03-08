@@ -106,12 +106,4 @@ public class LoginActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-//    public static void main(String[] args) {
-//        try {
-//            ServerUtils.getUsersFromServer();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

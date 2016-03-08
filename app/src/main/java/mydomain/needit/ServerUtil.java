@@ -2,9 +2,11 @@ package mydomain.needit;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -13,7 +15,7 @@ import java.net.URL;
 /**
  * Created by Michal on 08/03/2016.
  */
-public class PostUtils {
+public class ServerUtil {
 
     public static String sendHTTPData(String urlpath, JSONObject json) {
         HttpURLConnection connection = null;
@@ -51,6 +53,35 @@ public class PostUtils {
             if (connection != null) {
                 connection.disconnect();
             }
+        }
+    }
+
+    public static JSONArray getFromServer(String urlString) throws IOException {
+        try {
+            URL url = new URL(urlString);
+            Log.w("test!", "here");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            Log.w("test!", "connected");
+            try {
+                Log.w("test!", "trying");
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                Log.w("test!", "read data: " + bufferedReader.toString());
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line).append("\n");
+                }
+                Log.w("test!", stringBuilder.toString());
+                bufferedReader.close();
+                JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+                return jsonArray;
+            } finally {
+                urlConnection.disconnect();
+            }
+        } catch (Exception e) {
+            Log.w("test!", e.toString());
+            return null;
         }
     }
 }

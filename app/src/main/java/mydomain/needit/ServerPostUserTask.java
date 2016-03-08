@@ -21,7 +21,7 @@ public class ServerPostUserTask extends AsyncTask<UserLocation, String, String> 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        PostUtils.sendHTTPData("http://needit2.azurewebsites.net/api/Users", jsonObject);
+        ServerUtil.sendHTTPData("http://needit2.azurewebsites.net/api/Users", jsonObject);
         return "";
     }
 
