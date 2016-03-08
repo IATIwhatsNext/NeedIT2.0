@@ -23,17 +23,19 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends Activity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     protected GoogleMap mMap;
-    protected boolean isAvailable = false;
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
 
 
+    protected boolean isAvailable = false;
+    private String userID;
     /**
      * Send a  notification service.
      */
@@ -160,5 +162,13 @@ public class MainActivity extends Activity
         super.onDestroy();
         Intent intentService = new Intent(this, NotificationService.class);
         stopService(intentService);
+    }
+
+    public void updateMap(List<UserLocation> userLocations){
+
+    }
+
+    public String getUserID() {
+        return userID;
     }
 }

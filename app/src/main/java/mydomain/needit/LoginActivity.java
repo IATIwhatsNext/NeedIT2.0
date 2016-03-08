@@ -29,12 +29,13 @@ public class LoginActivity extends FragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.login_activity);
+
         info = (TextView)findViewById(R.id.info);
         loginButton = (LoginButton)findViewById(R.id.login_button);
         loginButton.setReadPermissions("public_profile");
@@ -105,4 +106,12 @@ public class LoginActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
- }
+
+//    public static void main(String[] args) {
+//        try {
+//            ServerUtils.getUsersFromServer();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+}
