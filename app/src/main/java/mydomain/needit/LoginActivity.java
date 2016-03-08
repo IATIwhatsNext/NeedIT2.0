@@ -11,6 +11,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import android.app.Activity;
 
 /**
  * Created by 10176331 on 3/7/2016.
@@ -44,6 +45,8 @@ public class LoginActivity extends FragmentActivity {
                                 "Auth Token: "
                                 + loginResult.getAccessToken().getToken()
                 );
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
             }
 
             @Override
