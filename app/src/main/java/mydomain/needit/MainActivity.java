@@ -151,12 +151,6 @@ public class MainActivity extends AppCompatActivity
                     .icon(BitmapDescriptorFactory.defaultMarker(hue)));
         }
 
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(32.1,34.85))
-                .title("Shahar")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-                ).showInfoWindow();
-
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             @Override
