@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // Create an instance of GoogleAPIClient.
+         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
             // See https://g.co/AppIndexing/AndroidStudio for more information.

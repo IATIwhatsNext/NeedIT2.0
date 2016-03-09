@@ -55,5 +55,5 @@
         android:textColor="#e81313"
         android:textSize="12sp"
         android:textAlignment="center" />
-    I
+
 </android.support.design.widget.CoordinatorLayout>

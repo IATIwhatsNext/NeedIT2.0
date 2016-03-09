@@ -5,17 +5,22 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+
+import java.util.List;
 
 /**
  * Created by dimitrke on 07/03/2016.
  */
 public class NotificationService extends Service {
 
-    public static final int NOTIFICATION_ID = 1;
+
+    public static final int NOTIFICATION_REQ_ID = 1;
+    public static final int NOTIFICATION_RES_ID = 2;
 
     @Nullable
     @Override
@@ -32,11 +37,14 @@ public class NotificationService extends Service {
 
         h.postDelayed(new Runnable() {
             public void run() {
-                sendNotification();
-                InMemoryDB.update();
+                 InMemoryDB.update();
+                notifyUserWithRequest(InMemoryDB.getRequests());
+                notifyUserWithResponse(InMemoryDB.getResponses());
                 h.postDelayed(this, delay);
             }
         }, delay);
+
+
         return START_STICKY;
     }
 
@@ -47,33 +55,60 @@ public class NotificationService extends Service {
 
     }
 
-    public void sendNotification() {
+    public void notifyUserWithRequest(List<Request> requestList) {
 
-        Intent intent = new Intent();
+        for (Request req : requestList) {
+            if (UserDetailsProvider.getUserID() != req.getUserLocation().getUserID()) {
+                Intent intent = new Intent();
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+                Intent intentAccept = new Intent(getApplicationContext(), AcceptActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", req.getUserLocation().getUserID());
+                intentAccept.putExtras(bundle);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+                PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                builder.setSmallIcon(R.drawable.people_logo);
+                builder.setContentIntent(pendingIntent);
+                builder.setAutoCancel(true);
+                builder.addAction(R.drawable.reject, "Reject", pendingIntent);
+                builder.addAction(R.drawable.ok, "Accept", pendingIntentAccept);
 
-        Intent intentAccept = new Intent();
-        intentAccept.setClass(this, AcceptActivity.class);
-        PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);
+                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.people_logo));
+                builder.setContentTitle("Need It- Request for help");
+                builder.setContentText("Someone need your help ,he need "+req.getRequest());
+                NotificationManager notificationManager = (NotificationManager) getSystemService(
+                        NOTIFICATION_SERVICE);
+                notificationManager.notify(NOTIFICATION_REQ_ID, builder.build());
+            }
+        }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    }
 
-        builder.setSmallIcon(R.drawable.ic_stat_notification);
+    public void notifyUserWithResponse(List<Response> responseList) {
+        for (Response res : responseList) {
+            if (UserDetailsProvider.getUserID() != res.getUserLocation().getUserID()) {
+                Intent intentAccept = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", res.getUserLocation().getUserID());
+                intentAccept.putExtras(bundle);
+                intentAccept.setClass(this, UserDetailsActivity.class);
+                PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);
 
-        builder.setContentIntent(pendingIntent);
-        builder.setAutoCancel(true);
-        builder.addAction(R.drawable.reject, "Reject", pendingIntent);
-        builder.addAction(R.drawable.ok, "Accept", pendingIntentAccept);
-        //todo: add call ServerPostResponseTesk.execute()
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
-        builder.setContentTitle("Need It -Notifications");
-        builder.setContentText("Your help is needed!");
-        NotificationManager notificationManager = (NotificationManager) getSystemService(
-                NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
+                builder.setSmallIcon(R.drawable.people_logo);
 
+                builder.setAutoCancel(true);
+                builder.addAction(R.drawable.ok, "OK", pendingIntentAccept);
+                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.people_logo));
+                builder.setContentTitle("Need It- Response for help");
+                builder.setContentText("You get Help :)");
+                NotificationManager notificationManager = (NotificationManager) getSystemService(
+                        NOTIFICATION_SERVICE);
+                notificationManager.notify(NOTIFICATION_RES_ID, builder.build());
+            }
+        }
     }
 
 }
