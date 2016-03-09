@@ -165,7 +165,7 @@ public class MainActivity extends Activity
                 Toast.makeText(this, myLocation.toString(), Toast.LENGTH_SHORT).show();
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
-                //TODO: should call server with my current location
+                new ServerPostUserTask().execute(UserDetailsProvider.getUserLocation());
             }
         }
     }

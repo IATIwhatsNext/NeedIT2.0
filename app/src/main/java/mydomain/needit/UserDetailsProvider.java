@@ -47,7 +47,7 @@ public class UserDetailsProvider extends Activity {
             Log.e("security", "location permission issue");
         }
 
-        return null;
+        return new LatLng(32.1, 34.87);
     }
 
     public static UserLocation getUserLocation() {

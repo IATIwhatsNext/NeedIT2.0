@@ -65,7 +65,6 @@ public class NotificationService extends Service {
         builder.setAutoCancel(true);
         builder.addAction(R.drawable.reject, "Reject", pendingIntent);
         builder.addAction(R.drawable.ok, "Accept", pendingIntentAccept);
-        new ServerPostResponseTask().execute(new Response(UserDetailsProvider.getUserLocation(), "I'm here!"));
         //todo: add call ServerPostResponseTesk.execute()
 
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));

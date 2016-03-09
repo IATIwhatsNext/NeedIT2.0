@@ -1,6 +1,7 @@
 package mydomain.needit;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ public class ServerPostUserTask extends AsyncTask<UserLocation, String, String> 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.w("!!!!!", "sending: " + jsonObject.toString());
         ServerUtil.sendHTTPData("http://needit2.azurewebsites.net/api/Users", jsonObject);
         return "";
     }
