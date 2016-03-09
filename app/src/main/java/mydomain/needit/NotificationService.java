@@ -34,7 +34,6 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //  Toast.makeText(this,"Started",Toast.LENGTH_LONG).show();
 
         final Handler h = new Handler();
         final int delay = 10000; //milliseconds
@@ -55,7 +54,6 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //       Toast.makeText(this,"Stop",Toast.LENGTH_LONG).show();
 
     }
 

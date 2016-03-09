@@ -1,22 +1,18 @@
 package mydomain.needit;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
@@ -60,10 +56,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-       // getSupportActionBar().setTitle(R.string.app_name);
+        // getSupportActionBar().setTitle(R.string.app_name);
         getSupportActionBar().setLogo(R.drawable.people_black_logo);
         Intent intent = getIntent();
 
@@ -119,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-         // Create an instance of GoogleAPIClient.
+        // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
             // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -155,7 +151,6 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(MainActivity.this, marker.getTitle(), Toast.LENGTH_SHORT).show();// display toast
                 return true;
             }
 
@@ -177,7 +172,7 @@ public class MainActivity extends AppCompatActivity
         updateSelfLocation();
     }
 
-    private void updateSelfLocation(){
+    private void updateSelfLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -188,14 +183,13 @@ public class MainActivity extends AppCompatActivity
             if (mLastLocation != null) {
                 LatLng myLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-                Toast.makeText(this, myLocation.toString(), Toast.LENGTH_SHORT).show();
-
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
             }
         }
         new ServerPostUserTask().execute(UserDetailsProvider.getUserLocation());
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -205,7 +199,6 @@ public class MainActivity extends AppCompatActivity
 
                     // permission was granted, yay! Do the contacts-related task you need to do.
                     updateSelfLocation();
-                    Toast.makeText(this, "got permissions" , Toast.LENGTH_SHORT).show();
 
                 } else {
 
