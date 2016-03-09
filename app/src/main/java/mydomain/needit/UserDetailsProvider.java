@@ -32,6 +32,9 @@ public class UserDetailsProvider extends Activity {
     }
 
     public static UserDetailsProvider getUserDetailsProvider() {
+        if (userDetailsProvider == null) {
+            userDetailsProvider = new UserDetailsProvider();
+        }
         return userDetailsProvider;
     }
 
@@ -52,7 +55,7 @@ public class UserDetailsProvider extends Activity {
         return null;
     }
 
-    public static UserLocation getUserLocation(){
+    public static UserLocation getUserLocation() {
         return new UserLocation(userID, getUserDetailsProvider().getLocation());
     }
 }
