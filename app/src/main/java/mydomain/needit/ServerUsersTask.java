@@ -40,7 +40,7 @@ public class ServerUsersTask extends AsyncTask<MainActivity, String, List<UserLo
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                result.add(new UserLocation(jsonObject.getString("userId"), new LatLng(jsonObject.getDouble("locationX"), jsonObject.getDouble("locationY"))));
+                result.add(new UserLocation(jsonObject.getString("userId"), jsonObject.getString("accessToken"), new LatLng(jsonObject.getDouble("locationX"), jsonObject.getDouble("locationY"))));
                 Log.w("!!!!!", jsonObject.getString("userId"));
             } catch (JSONException e) {
                 e.printStackTrace();

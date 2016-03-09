@@ -44,6 +44,7 @@ public class ServerRequestTask extends AsyncTask<MainActivity, String, List<Requ
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 result.add(new Request(new UserLocation(jsonObject.getString("userId"),
+                        jsonObject.getString("accessToken"),
                         new LatLng(jsonObject.getDouble("locationX"),
                                 jsonObject.getDouble("locationY"))),
                         jsonObject.getString("request")));

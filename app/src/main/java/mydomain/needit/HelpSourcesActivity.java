@@ -34,7 +34,7 @@ public class HelpSourcesActivity extends AppCompatActivity {
         }
 
         //TODO call to server post new  help request - do we have access to location etc?
-        new ServerPostRequestTask().execute(new Request(new UserLocation(UserDetailsProvider.getUserID(), UserDetailsProvider.getUserDetailsProvider().getLocation()), neededHelp)); //todo: need to send real location and ID
+        new ServerPostRequestTask().execute(new Request(UserDetailsProvider.getUserLocation(), neededHelp)); //todo: need to send real location and ID
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
     }
