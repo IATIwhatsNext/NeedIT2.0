@@ -61,14 +61,14 @@ public class NotificationService extends Service {
 
         for (Request req : requestList) {
             String uniqueReq = req.getUserLocation().getUserID() + req.getRequest();
-            if (UserDetailsProvider.getUserID() != req.getUserLocation().getUserID() && (!uniqueRequest.contains(uniqueReq))) {
+            if ((UserDetailsProvider.getUserID() != req.getUserLocation().getUserID()) && (req.getUserLocation().getAccessToken()!="null")&& (!uniqueRequest.contains(uniqueReq))) {
                 uniqueRequest.add(uniqueReq);
                 Intent intent = new Intent();
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
                 Intent intentAccept = new Intent(getApplicationContext(), AcceptActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("userId", req.getUserLocation().getUserID());
-                bundle.putString("userToken", req.getUserLocation().getAccessToken());
+                bundle.putString("reqUserId", req.getUserLocation().getUserID());
+                bundle.putString("reqUserToken", req.getUserLocation().getAccessToken());
                 intentAccept.putExtras(bundle);
 
                 PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);
@@ -94,12 +94,12 @@ public class NotificationService extends Service {
 
         for (Response res : responseList) {
             String uniqueRes = res.getUserLocation().getUserID() + res.getResponseToUser();
-            if (UserDetailsProvider.getUserID() != res.getUserLocation().getUserID() && ((!uniqueResponse.contains(uniqueRes)))) {
+            if ((UserDetailsProvider.getUserID() != res.getUserLocation().getUserID())&&(res.getUserLocation().getAccessToken()!="null") && ((!uniqueResponse.contains(uniqueRes)))) {
                 uniqueResponse.add(uniqueRes);
                 Intent intentAccept = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putString("userId", res.getUserLocation().getUserID());
-                bundle.putString("userToken", res.getUserLocation().getAccessToken());
+                bundle.putString("reqUserId", res.getUserLocation().getUserID());
+                bundle.putString("reqUserToken", res.getUserLocation().getAccessToken());
                 intentAccept.putExtras(bundle);
                 intentAccept.setClass(this, UserDetailsActivity.class);
                 PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);

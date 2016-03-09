@@ -35,8 +35,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
-        userToken = intent.getStringExtra("userToken");
+        userId = intent.getStringExtra("reqUserId");
+        userToken = intent.getStringExtra("reqUserToken");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -50,16 +50,18 @@ public class UserDetailsActivity extends AppCompatActivity {
                 });
             }
         });
-        if (userToken!= null && userToken.length() > 0) {
+        if (userToken!= "null" && userToken.length() > 0) {
             String[] userInfo = userToken.split(";");
-            TextView faceLink =(TextView) findViewById(R.id.userLinkToFacebookTxt);
-            faceLink.setText("Facebook profile link: "+userInfo[3]);
-            TextView userNameTxt =(TextView) findViewById(R.id.userNameTxt);
-            userNameTxt.setText("First Name: "+ userInfo[0]+ "  Last Name: "+ userInfo[1]);
+            if(userInfo.length >2) {
+                TextView faceLink = (TextView) findViewById(R.id.userLinkToFacebookTxt);
+                faceLink.setText("Facebook profile link: " + userInfo[3]);
+                TextView userNameTxt = (TextView) findViewById(R.id.userNameTxt);
+                userNameTxt.setText("First Name: " + userInfo[0] + "  Last Name: " + userInfo[1]);
+            }
         }
     }
 
-    private void onBackToMap(View v) {
+    public void onBackToMap(View v) {
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
     };

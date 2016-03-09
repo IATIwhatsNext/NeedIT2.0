@@ -27,6 +27,7 @@ public class UserLocation {
     public UserLocation(String userID, String accessToken, LatLng location) {
         this.userID = userID;
         this.location = location;
+        this.accessToken = accessToken;
     }
 
     @Override
