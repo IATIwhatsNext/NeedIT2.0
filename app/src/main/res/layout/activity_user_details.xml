@@ -25,10 +25,10 @@
         android:id="@+id/textView"
         android:textStyle="normal|bold|italic"
         android:textColor="#0f7684"
-        android:layout_centerVertical="true"
+        android:textColorHighlight="#020308"
+        android:layout_below="@+id/userPic"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColorHighlight="#020308" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +42,8 @@
         android:layout_marginTop="39dp"
         android:layout_below="@+id/userNameTxt"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="12dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,7 +57,8 @@
         android:layout_marginTop="36dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="12dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -67,7 +69,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="#7af065"
+        android:background="#73e160"
         android:textColor="#fefafa"
         android:focusable="true"
         android:padding="3dp"

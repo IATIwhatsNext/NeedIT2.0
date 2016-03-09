@@ -40,7 +40,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                final Bitmap bitmap = getFacebookProfilePicture(UserDetailsProvider.getUserID());
+                final Bitmap bitmap = getFacebookProfilePicture(userId);
                 UserDetailsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -52,11 +52,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         });
         if (userToken!= "null" && userToken.length() > 0) {
             String[] userInfo = userToken.split(";");
-            if(userInfo.length >2) {
+            if(userInfo.length ==3 ) {
                 TextView faceLink = (TextView) findViewById(R.id.userLinkToFacebookTxt);
-                faceLink.setText("Facebook profile link: " + userInfo[3]);
+                faceLink.setText("Facebook profile link: " + userInfo[2]);
                 TextView userNameTxt = (TextView) findViewById(R.id.userNameTxt);
-                userNameTxt.setText("First Name: " + userInfo[0] + "  Last Name: " + userInfo[1]);
+                userNameTxt.setText("Name: "+ userInfo[1]);
             }
         }
     }
