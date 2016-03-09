@@ -64,6 +64,31 @@ public class UserDetailsActivity extends AppCompatActivity {
         return bitmap;
     }
 
+//    GraphRequest request = GraphRequest.newMeRequest(
+//            UserDetailsProvider.getUserToken(),
+//            new GraphRequest.GraphJSONObjectCallback() {
+//                @Override
+//                public void onCompleted(
+//                        JSONObject object,
+//                        GraphResponse response) {
+//                    try {
+//
+//                        userFirstName =  object.getString("first_name");
+//                        userLastName  = object.getString("last_name");
+//                        Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("userFirstName",);
+//                        bundle.putString("userLastName", );
+//                        mainActivity.putExtras(bundle);
+//                        startActivity(mainActivity);
+//                        finish();
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            });
 
 }
 

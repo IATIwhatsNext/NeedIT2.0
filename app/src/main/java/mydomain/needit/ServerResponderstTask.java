@@ -28,7 +28,7 @@ public class ServerResponderstTask extends AsyncTask<MainActivity, String, List<
     @Override
     protected List<Response> doInBackground(MainActivity... params) {
         try {
-            return parseUserJSON(ServerUtil.getFromServer("http://needit2.azurewebsites.net/api/user/Responses?id=" + "userID"));//todo:real user id
+            return parseUserJSON(ServerUtil.getFromServer("http://needit2.azurewebsites.net/api/user/Responses?id=" + UserDetailsProvider.getUserID()));//todo:real user id
         } catch (IOException e) {
             e.printStackTrace();
         }

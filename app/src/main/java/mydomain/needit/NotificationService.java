@@ -11,7 +11,11 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
+import java.lang.reflect.Array;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by dimitrke on 07/03/2016.
@@ -21,6 +25,8 @@ public class NotificationService extends Service {
 
     public static final int NOTIFICATION_REQ_ID = 1;
     public static final int NOTIFICATION_RES_ID = 2;
+    private static Set<String> uniqueRequest = new TreeSet<>();
+    private static Set<String> uniqueResponse = new TreeSet<>();
 
     @Nullable
     @Override
@@ -58,7 +64,9 @@ public class NotificationService extends Service {
     public void notifyUserWithRequest(List<Request> requestList) {
 
         for (Request req : requestList) {
-            if (UserDetailsProvider.getUserID() != req.getUserLocation().getUserID()) {
+             String uniqueReq =req.getUserLocation().getUserID()+req.getRequest();
+            if (UserDetailsProvider.getUserID() != req.getUserLocation().getUserID() && (!uniqueRequest.contains(uniqueReq))) {
+                uniqueRequest.add(uniqueReq);
                 Intent intent = new Intent();
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
                 Intent intentAccept = new Intent(getApplicationContext(), AcceptActivity.class);
@@ -86,8 +94,11 @@ public class NotificationService extends Service {
     }
 
     public void notifyUserWithResponse(List<Response> responseList) {
+
         for (Response res : responseList) {
-            if (UserDetailsProvider.getUserID() != res.getUserLocation().getUserID()) {
+            String uniqueRes =res.getUserLocation().getUserID()+res.getResponse();
+            if (UserDetailsProvider.getUserID() != res.getUserLocation().getUserID() && ((!uniqueResponse.contains(uniqueRes)))) {
+                uniqueResponse.add(uniqueRes);
                 Intent intentAccept = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", res.getUserLocation().getUserID());
