@@ -8,6 +8,12 @@ import com.google.android.gms.maps.model.LatLng;
 public class UserLocation {
     private String userID;
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    private String accessToken;
+
     public String getUserID() {
         return userID;
     }
@@ -18,7 +24,7 @@ public class UserLocation {
 
     private LatLng location;
 
-    public UserLocation(String userID, LatLng location) {
+    public UserLocation(String userID, String accessToken, LatLng location) {
         this.userID = userID;
         this.location = location;
     }

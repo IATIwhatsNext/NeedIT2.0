@@ -11,8 +11,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
-import java.lang.reflect.Array;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -96,7 +94,7 @@ public class NotificationService extends Service {
     public void notifyUserWithResponse(List<Response> responseList) {
 
         for (Response res : responseList) {
-            String uniqueRes =res.getUserLocation().getUserID()+res.getResponse();
+            String uniqueRes =res.getUserLocation().getUserID()+res.getResponseToUser();
             if (UserDetailsProvider.getUserID() != res.getUserLocation().getUserID() && ((!uniqueResponse.contains(uniqueRes)))) {
                 uniqueResponse.add(uniqueRes);
                 Intent intentAccept = new Intent();

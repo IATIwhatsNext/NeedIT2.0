@@ -63,6 +63,6 @@ public class UserDetailsProvider extends Activity {
     }
 
     public static UserLocation getUserLocation() {
-        return new UserLocation(userID, getUserDetailsProvider().getLocation());
+        return new UserLocation(userID, userToken, getUserDetailsProvider().getLocation());
     }
 }

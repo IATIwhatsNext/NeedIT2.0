@@ -21,6 +21,7 @@ public class ServerPostUserTask extends AsyncTask<UserLocation, String, String> 
             jsonObject.put("userId", userLocation.getUserID());
             jsonObject.put("locationX", userLocation.getLocation().latitude);
             jsonObject.put("locationY", userLocation.getLocation().longitude);
+            jsonObject.put("accessToken", userLocation.getAccessToken());
         } catch (JSONException e) {
             Log.e("JSON", "could not send user " + jsonObject);
             e.printStackTrace();

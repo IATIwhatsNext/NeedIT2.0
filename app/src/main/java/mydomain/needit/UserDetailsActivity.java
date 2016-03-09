@@ -70,7 +70,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 //                @Override
 //                public void onCompleted(
 //                        JSONObject object,
-//                        GraphResponse response) {
+//                        GraphResponse responseToUser) {
 //                    try {
 //
 //                        userFirstName =  object.getString("first_name");

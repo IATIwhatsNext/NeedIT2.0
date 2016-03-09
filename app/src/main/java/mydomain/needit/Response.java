@@ -6,27 +6,33 @@ package mydomain.needit;
 public class Response {
     UserLocation userLocation;
 
-    String response;
+    private final String responseToUser;
+
+    public String getResponseToaccessToken() {
+        return responseToaccessToken;
+    }
+
+    private final String responseToaccessToken;
 
     public UserLocation getUserLocation() {
         return userLocation;
     }
 
-    public String getResponse() {
-        return response;
+    public String getResponseToUser() {
+        return responseToUser;
     }
 
-    public Response(UserLocation userLocation, String response) {
-
+    public Response(UserLocation userLocation, String responseToUser, String responseToaccessToken) {
         this.userLocation = userLocation;
-        this.response = response;
+        this.responseToUser = responseToUser;
+        this.responseToaccessToken = responseToaccessToken;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Response) {
             Response r = (Response) o;
-            return r.getUserLocation().getUserID().equals(this.getUserLocation().getUserID()) && r.getUserLocation().getLocation().equals(this.getUserLocation().getLocation()) && r.getResponse().equals(this.getResponse());
+            return r.getUserLocation().getUserID().equals(this.getUserLocation().getUserID()) && r.getUserLocation().getLocation().equals(this.getUserLocation().getLocation()) && r.getResponseToUser().equals(this.getResponseToUser());
         }
         return false;
     }

@@ -19,6 +19,7 @@ public class ServerPostRequestTask extends AsyncTask<Request, String, String> {
             jsonObject.put("locationX", request.getUserLocation().getLocation().latitude);
             jsonObject.put("locationY", request.getUserLocation().getLocation().longitude);
             jsonObject.put("request", request.getRequest());
+            jsonObject.put("accessToken", request.getUserLocation().getAccessToken());
         } catch (JSONException e) {
             e.printStackTrace();
         }
