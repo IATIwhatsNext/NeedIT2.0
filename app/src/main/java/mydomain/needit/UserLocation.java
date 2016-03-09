@@ -22,4 +22,13 @@ public class UserLocation {
         this.userID = userID;
         this.location = location;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof UserLocation){
+            UserLocation ul = (UserLocation) o;
+            return ul.getUserID().equals(this.getUserID()) && ul.getLocation().equals(this.location);
+        }
+        return false;
+    }
 }

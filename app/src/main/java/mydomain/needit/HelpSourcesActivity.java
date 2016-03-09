@@ -20,7 +20,7 @@ public class HelpSourcesActivity extends AppCompatActivity {
      }
 
     public void onHelpButtonPress(View v) {
-        String neededHelp ;
+        String neededHelp = "";
         switch (v.getId()) {
             case R.id.cockroachBtn:
                 neededHelp = HelpType.COCKROACH.toString();
@@ -34,7 +34,7 @@ public class HelpSourcesActivity extends AppCompatActivity {
         }
 
         //TODO call to server post new  help request - do we have access to location etc?
-       // new ServerPostRequestTask().execute(/*new Request...*/); //todo: need to send real location and ID
+       new ServerPostRequestTask().execute(new Request(new UserLocation(UserDetailsProvider.getUserID(), UserDetailsProvider.getUserDetailsProvider().getLocation()), neededHelp)); //todo: need to send real location and ID
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
     }

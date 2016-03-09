@@ -21,6 +21,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -62,7 +63,19 @@ public class MainActivity extends Activity
         InMemoryDB.registerUpdate(InMemoryDB.Type.USERS, new Runnable() {
             @Override
             public void run() {
-                drawUsersOnMap(InMemoryDB.getUserLocations());
+                drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.USERS);
+            }
+        });
+        InMemoryDB.registerUpdate(InMemoryDB.Type.REQUESTS, new Runnable() {
+            @Override
+            public void run() {
+                drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.REQUESTS);
+            }
+        });
+        InMemoryDB.registerUpdate(InMemoryDB.Type.RESPONSES, new Runnable() {
+            @Override
+            public void run() {
+                drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.RESPONSES);
             }
         });
         Toast.makeText(this, "Hello " + userName + " " + userLastName, Toast.LENGTH_LONG).show();
@@ -85,7 +98,7 @@ public class MainActivity extends Activity
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
         }
 
-        drawUsersOnMap(InMemoryDB.getUserLocations()); //TODO: remove this after server updates the map
+        drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.USERS); //TODO: remove this after server updates the map
 
         Button helpBtn = (Button) findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,15 +118,25 @@ public class MainActivity extends Activity
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .addApi(AppIndex.API).build();
-            LocationProvider.init(mGoogleApiClient, userID);
+            UserDetailsProvider.init(mGoogleApiClient, userID);
         }
     }
 
-    public void drawUsersOnMap(List<UserLocation> userLocations) {
+    public void drawUsersOnMap(List<UserLocation> userLocations, InMemoryDB.Type type) {
+        float hue = BitmapDescriptorFactory.HUE_RED;
+        switch (type) {
+            case USERS:
+                break;
+            case RESPONSES:
+                break;
+            case REQUESTS:
+                break;
+        }
         for (UserLocation location : userLocations) {
             mMap.addMarker(new MarkerOptions()
                     .position(location.getLocation())
-                    .title(location.getUserID()));
+                    .title(location.getUserID())
+                    .icon(BitmapDescriptorFactory.defaultMarker(hue)));
         }
     }
 

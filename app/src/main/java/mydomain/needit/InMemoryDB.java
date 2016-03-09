@@ -27,16 +27,26 @@ public class InMemoryDB {
     }
 
     public static void setUserLocations(List<UserLocation> userLocations) {
+        if (InMemoryDB.userLocations.containsAll(userLocations) && userLocations.containsAll(InMemoryDB.userLocations)) {
+            return;
+        }
         InMemoryDB.userLocations = userLocations;
         updateRegistered(Type.USERS);
     }
 
     public static void setRequests(List<Request> requests) {
+        if (InMemoryDB.requests.containsAll(requests) && requests.containsAll(InMemoryDB.requests)) {
+            return;
+        }
+
         InMemoryDB.requests = requests;
         updateRegistered(Type.REQUESTS);
     }
 
     public static void setResponses(List<Response> responses) {
+        if (InMemoryDB.responses.containsAll(responses) && responses.containsAll(InMemoryDB.responses)) {
+            return;
+        }
         InMemoryDB.responses = responses;
         updateRegistered(Type.RESPONSES);
     }
@@ -63,10 +73,8 @@ public class InMemoryDB {
         new ServerUsersTask().execute();
         new ServerRequestTask().execute();
         new ServerResponderstTask().execute();
-        //new ServerPostUserTask().execute(new UserLocation("Michal", LocationProvider.getLocationProvider().getLocation())); //todo:access location etc.
+        //new ServerPostUserTask().execute(new UserLocation("Michal", UserDetailsProvider.getUserDetailsProvider().getLocation())); //todo:access location etc.
     }
-
-    //todo: add periodic update
 
     public enum Type {
         USERS,

@@ -13,20 +13,27 @@ import com.google.android.gms.maps.model.LatLng;
 /**
  * Created by Michal on 08/03/2016.
  */
-public class LocationProvider extends Activity {
+public class UserDetailsProvider extends Activity {
     private static GoogleApiClient mGoogleApiClient;
-    static LocationProvider locationProvider;
+    static UserDetailsProvider userDetailsProvider;
 
-    public static LocationProvider getLocationProvider() {
-        return locationProvider;
+    static String userID = "";
+
+    public static String getUserID() {
+        return userID;
     }
 
-    private LocationProvider() {
+    public static UserDetailsProvider getUserDetailsProvider() {
+        return userDetailsProvider;
     }
 
-    public static void init(GoogleApiClient GoogleApiClient, String userID) {
-        locationProvider = new LocationProvider();
+    private UserDetailsProvider() {
+    }
+
+    public static void init(GoogleApiClient GoogleApiClient, String _userID) {
+        userDetailsProvider = new UserDetailsProvider();
         mGoogleApiClient = GoogleApiClient;
+        userID = _userID;
     }
 
     public LatLng getLocation() {
@@ -41,5 +48,9 @@ public class LocationProvider extends Activity {
             return null;
         }
         return null;
+    }
+
+    public static UserLocation getUserLocation(){
+        return new UserLocation(userID, getUserDetailsProvider().getLocation());
     }
 }

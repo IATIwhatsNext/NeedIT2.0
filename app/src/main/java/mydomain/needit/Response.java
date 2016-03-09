@@ -21,4 +21,14 @@ public class Response {
         this.userLocation = userLocation;
         this.response = response;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Response) {
+            Response r = (Response) o;
+            return r.getUserLocation().getUserID().equals(this.getUserLocation().getUserID()) && r.getUserLocation().getLocation().equals(this.getUserLocation().getLocation()) && r.getResponse().equals(this.getResponse());
+        }
+        return false;
+    }
+
 }

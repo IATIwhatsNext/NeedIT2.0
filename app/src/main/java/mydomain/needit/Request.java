@@ -21,4 +21,13 @@ public class Request {
     }
 
     String request;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Request) {
+            Request r = (Request) o;
+            return r.getUserLocation().getUserID().equals(this.getUserLocation().getUserID()) && r.getUserLocation().getLocation().equals(this.getUserLocation().getLocation()) && r.getRequest().equals(this.getRequest());
+        }
+        return false;
+    }
 }
