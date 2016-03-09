@@ -128,8 +128,10 @@ public class MainActivity extends Activity
             case USERS:
                 break;
             case RESPONSES:
+                hue = BitmapDescriptorFactory.HUE_AZURE;
                 break;
             case REQUESTS:
+                hue = BitmapDescriptorFactory.HUE_YELLOW;
                 break;
         }
         for (UserLocation location : userLocations) {
