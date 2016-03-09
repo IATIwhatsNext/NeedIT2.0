@@ -19,23 +19,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-         <!--  <ImageView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/needit_logo"
-                android:layout_gravity="left"
-                android:scaleType="fitStart" />-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="Century Gothic"
-                android:layout_gravity="left"
-                android:text="needit"
-                android:textColor="@color/defaultTextColor"
-                android:textSize="20dp" />
-
-
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
