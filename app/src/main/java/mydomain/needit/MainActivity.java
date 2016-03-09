@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
         setSupportActionBar(toolbar);
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-         // Create an instance of GoogleAPIClient.
+        // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
             // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -170,10 +170,6 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
-
-        if(type.equals(InMemoryDB.Type.USERS)){
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.1, 34.87), 13));
-        }
     }
 
     protected void onStart() {
@@ -261,15 +257,14 @@ public class MainActivity extends AppCompatActivity
         return userID;
     }
 
-    protected void changeOkBtnToHelp(int background){
+    protected void changeOkBtnToHelp(int background) {
         Button helpBtn = (Button) findViewById(R.id.helpBtn);
         Button okBtn = (Button) findViewById(R.id.okBtn);
 
-        if(background == R.drawable.help_btn){
+        if (background == R.drawable.help_btn) {
             okBtn.setVisibility(View.GONE);
             helpBtn.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             helpBtn.setVisibility(View.GONE);
             okBtn.setVisibility(View.VISIBLE);
         }
