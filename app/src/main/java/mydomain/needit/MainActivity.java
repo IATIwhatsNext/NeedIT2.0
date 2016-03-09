@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
         setSupportActionBar(toolbar);
         // getSupportActionBar().setTitle(R.string.app_name);
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         String userName = intent.getStringExtra("userName");
         String userLastName = intent.getStringExtra("userLastName");
         this.userID = userName + userLastName;
+
+        int backgroundForHelpBtn = intent.getIntExtra("backgroundForHelpBtn", R.drawable.help_btn);
 
         InMemoryDB.registerUpdate(InMemoryDB.Type.USERS, new Runnable() {
             @Override
@@ -106,7 +109,11 @@ public class MainActivity extends AppCompatActivity
 
         drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.USERS); //TODO: remove this after server updates the map
 
+        changeOkBtnToHelp(backgroundForHelpBtn);
+
         Button helpBtn = (Button) findViewById(R.id.helpBtn);
+        Button okBtn = (Button) findViewById(R.id.okBtn);
+
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +122,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // Create an instance of GoogleAPIClient.
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeOkBtnToHelp(R.drawable.help_btn);
+            }
+        });
+
+         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
             // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -244,5 +259,19 @@ public class MainActivity extends AppCompatActivity
 
     public String getUserID() {
         return userID;
+    }
+
+    protected void changeOkBtnToHelp(int background){
+        Button helpBtn = (Button) findViewById(R.id.helpBtn);
+        Button okBtn = (Button) findViewById(R.id.okBtn);
+
+        if(background == R.drawable.help_btn){
+            okBtn.setVisibility(View.GONE);
+            helpBtn.setVisibility(View.VISIBLE);
+        }
+        else{
+            helpBtn.setVisibility(View.GONE);
+            okBtn.setVisibility(View.VISIBLE);
+        }
     }
 }
