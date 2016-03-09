@@ -17,18 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <Switch
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/availableIndicationString"
+                android:layout_height="match_parent"
                 android:checked="false"
+                android:text="@string/availableIndicationString"
                 android:layout_gravity="center|end"
                 android:id="@+id/availableIndication"
                 android:enabled="true"
                 android:padding="10dp"
-                android:singleLine="false" />
+                android:singleLine="true"
+                android:drawableTint="#494949" />
 
         </android.support.v7.widget.Toolbar>
 

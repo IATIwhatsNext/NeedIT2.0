@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NeedIT</string>
+    <string name="app_name">needit</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_login">"Sign in "</string>
 
@@ -20,6 +20,11 @@
     <string name="title_activity_main">Need IT</string>
     <string name="availableIndicationString">Available </string>
     <string name="helpBtnString">HELP!</string>
+    <string name="needItLogoContent">needit</string>
+
+    <string name="title_activity_splash">Need IT</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="cockroachHelp">Get help with cockroach</string>
     <string name="glassSugar">Need glass of sugar</string>
     <string name="carCables">Get help with car cables</string>

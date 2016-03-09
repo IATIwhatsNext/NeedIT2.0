@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
@@ -23,19 +27,21 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends Activity
+public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     protected GoogleMap mMap;
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
 
+    private static final int REQUEST_LOCATION = 0;
 
     protected boolean isAvailable = false;
     private String userID = "";
@@ -54,6 +60,11 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+       // getSupportActionBar().setTitle(R.string.app_name);
+        getSupportActionBar().setLogo(R.drawable.people_black_logo);
         Intent intent = getIntent();
 
         String userName = intent.getStringExtra("userName");
@@ -78,7 +89,6 @@ public class MainActivity extends Activity
                 drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.RESPONSES);
             }
         });
-        Toast.makeText(this, "Hello " + userName + " " + userLastName, Toast.LENGTH_LONG).show();
 
         Switch availableIndicationSwitch = (Switch) findViewById(R.id.availableIndication);
         availableIndicationSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -95,7 +105,7 @@ public class MainActivity extends Activity
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         }
 
         drawUsersOnMap(InMemoryDB.getUserLocations(), InMemoryDB.Type.USERS); //TODO: remove this after server updates the map
@@ -140,6 +150,22 @@ public class MainActivity extends Activity
                     .title(location.getUserID())
                     .icon(BitmapDescriptorFactory.defaultMarker(hue)));
         }
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(32.1,34.85))
+                .title("Shahar")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                ).showInfoWindow();
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Toast.makeText(MainActivity.this, marker.getTitle(), Toast.LENGTH_SHORT).show();// display toast
+                return true;
+            }
+
+        });
     }
 
     protected void onStart() {
@@ -154,6 +180,10 @@ public class MainActivity extends Activity
 
     @Override
     public void onConnected(Bundle connectionHint) {
+        updateSelfLocation();
+    }
+
+    private void updateSelfLocation(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -171,6 +201,25 @@ public class MainActivity extends Activity
         }
         new ServerPostUserTask().execute(UserDetailsProvider.getUserLocation());
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the contacts-related task you need to do.
+                    updateSelfLocation();
+                    Toast.makeText(this, "got permissions" , Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    // permission denied, boo! Disable the  functionality that depends on this permission.
+                }
+                return;
+            }
+        }
     }
 
     @Override

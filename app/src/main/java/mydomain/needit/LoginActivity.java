@@ -3,6 +3,7 @@ package mydomain.needit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -17,9 +18,6 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by 10176331 on 3/7/2016.
- */
 public class LoginActivity extends FragmentActivity {
     private TextView info;
     private LoginButton loginButton;
@@ -30,6 +28,8 @@ public class LoginActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
