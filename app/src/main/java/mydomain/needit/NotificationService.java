@@ -40,7 +40,7 @@ public class NotificationService extends Service {
 
         h.postDelayed(new Runnable() {
             public void run() {
-                 InMemoryDB.update();
+                InMemoryDB.update();
                 notifyUserWithRequest(InMemoryDB.getRequests());
                 notifyUserWithResponse(InMemoryDB.getResponses());
                 h.postDelayed(this, delay);
@@ -60,7 +60,7 @@ public class NotificationService extends Service {
     public void notifyUserWithRequest(List<Request> requestList) {
 
         for (Request req : requestList) {
-             String uniqueReq =req.getUserLocation().getUserID()+req.getRequest();
+            String uniqueReq = req.getUserLocation().getUserID() + req.getRequest();
             if (UserDetailsProvider.getUserID() != req.getUserLocation().getUserID() && (!uniqueRequest.contains(uniqueReq))) {
                 uniqueRequest.add(uniqueReq);
                 Intent intent = new Intent();
@@ -80,7 +80,7 @@ public class NotificationService extends Service {
 
                 builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.people_logo));
                 builder.setContentTitle("Need It- Request for help");
-                builder.setContentText("Someone need your help ,he need "+req.getRequest());
+                builder.setContentText("Someone needs help with " + req.getRequest());
                 NotificationManager notificationManager = (NotificationManager) getSystemService(
                         NOTIFICATION_SERVICE);
                 notificationManager.notify(NOTIFICATION_REQ_ID, builder.build());
@@ -92,7 +92,7 @@ public class NotificationService extends Service {
     public void notifyUserWithResponse(List<Response> responseList) {
 
         for (Response res : responseList) {
-            String uniqueRes =res.getUserLocation().getUserID()+res.getResponseToUser();
+            String uniqueRes = res.getUserLocation().getUserID() + res.getResponseToUser();
             if (UserDetailsProvider.getUserID() != res.getUserLocation().getUserID() && ((!uniqueResponse.contains(uniqueRes)))) {
                 uniqueResponse.add(uniqueRes);
                 Intent intentAccept = new Intent();
