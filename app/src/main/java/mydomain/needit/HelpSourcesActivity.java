@@ -1,9 +1,11 @@
 package mydomain.needit;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 public class HelpSourcesActivity extends AppCompatActivity {
 
@@ -40,7 +42,12 @@ public class HelpSourcesActivity extends AppCompatActivity {
 
         //TODO call to server post new  help request - do we have access to location etc?
         new ServerPostRequestTask().execute(new Request(UserDetailsProvider.getUserLocation(), neededHelp)); //todo: need to send real location and ID
+
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("backgroundForHelpBtn", R.drawable.im_ok);
+
+        mainActivity.putExtras(bundle); //Put your id
         startActivity(mainActivity);
     }
 }
