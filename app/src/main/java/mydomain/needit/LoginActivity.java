@@ -52,7 +52,7 @@ public class LoginActivity extends FragmentActivity {
 //                                + loginResult.getAccessToken().getToken()
 //                );
                 UserDetailsProvider.setUserID(loginResult.getAccessToken().getUserId());
-                UserDetailsProvider.setUserToken(loginResult.getAccessToken().getUserId());
+                UserDetailsProvider.setUserToken(loginResult.getAccessToken().getToken());
 
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
