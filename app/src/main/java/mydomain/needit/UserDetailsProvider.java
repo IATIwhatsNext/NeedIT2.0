@@ -17,6 +17,14 @@ public class UserDetailsProvider extends Activity {
     private static GoogleApiClient mGoogleApiClient;
     static UserDetailsProvider userDetailsProvider;
 
+    public static void setmGoogleApiClient(GoogleApiClient mGoogleApiClient) {
+        UserDetailsProvider.mGoogleApiClient = mGoogleApiClient;
+    }
+
+    public static void setUserID(String userID) {
+        UserDetailsProvider.userID = userID;
+    }
+
     static String userID = "";
 
     public static String getUserID() {
@@ -28,12 +36,6 @@ public class UserDetailsProvider extends Activity {
     }
 
     private UserDetailsProvider() {
-    }
-
-    public static void init(GoogleApiClient GoogleApiClient, String _userID) {
-        userDetailsProvider = new UserDetailsProvider();
-        mGoogleApiClient = GoogleApiClient;
-        userID = _userID;
     }
 
     public LatLng getLocation() {

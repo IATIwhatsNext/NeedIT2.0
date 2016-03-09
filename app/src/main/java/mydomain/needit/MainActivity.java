@@ -118,7 +118,7 @@ public class MainActivity extends Activity
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .addApi(AppIndex.API).build();
-            UserDetailsProvider.init(mGoogleApiClient, userID);
+            UserDetailsProvider.setmGoogleApiClient(mGoogleApiClient);
         }
     }
 

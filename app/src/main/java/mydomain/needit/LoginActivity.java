@@ -13,7 +13,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import android.app.Activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +35,8 @@ public class LoginActivity extends FragmentActivity {
 
         setContentView(R.layout.login_activity);
 
-        info = (TextView)findViewById(R.id.info);
-        loginButton = (LoginButton)findViewById(R.id.login_button);
+        info = (TextView) findViewById(R.id.info);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("public_profile");
 
         // Callback registration
@@ -52,6 +51,7 @@ public class LoginActivity extends FragmentActivity {
                                 "Auth Token: "
                                 + loginResult.getAccessToken().getToken()
                 );
+                UserDetailsProvider.setUserID(loginResult.getAccessToken().getUserId());
 
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -61,7 +61,7 @@ public class LoginActivity extends FragmentActivity {
                                     JSONObject object,
                                     GraphResponse response) {
                                 try {
-                                    info.setText("User Name:" + object.getString("last_name") +" " + object.getString("first_name"));
+                                    info.setText("User Name:" + object.getString("last_name") + " " + object.getString("first_name"));
 
                                     Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                                     Bundle bundle = new Bundle();
