@@ -11,12 +11,11 @@ public class HelpSourcesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_sources);
-      //  getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setTitle(R.string.help_sources_title);
     }
 
     public enum HelpType {
-        COCKROACH, CAR_CABLE, SUGAR,
+        COCKROACH, CAR_CABLE, SUGAR, CHILDREN ,MOVING
     }
 
     public void onHelpButtonPress(View v) {
@@ -30,6 +29,12 @@ public class HelpSourcesActivity extends AppCompatActivity {
                 break;
             case R.id.classSugarBtn:
                 neededHelp = HelpType.SUGAR.toString();
+                break;
+            case R.id.childrenBtn:
+                neededHelp = HelpType.CHILDREN.toString();
+                break;
+            case R.id.moveBtn:
+                neededHelp = HelpType.MOVING.toString();
                 break;
         }
 
