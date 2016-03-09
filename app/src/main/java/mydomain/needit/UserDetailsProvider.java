@@ -1,10 +1,8 @@
 package mydomain.needit;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -38,20 +36,17 @@ public class UserDetailsProvider extends Activity {
         return userDetailsProvider;
     }
 
-    private UserDetailsProvider() {
-    }
-
     public LatLng getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
 
+        try {
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (mLastLocation != null) {
                 return new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-
             }
-            return null;
+        } catch (SecurityException e) {
+            Log.e("security", "location permission issue");
         }
+
         return null;
     }
 
