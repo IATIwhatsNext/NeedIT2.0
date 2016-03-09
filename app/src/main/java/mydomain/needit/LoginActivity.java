@@ -43,14 +43,6 @@ public class LoginActivity extends FragmentActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
-//                info.setText(
-//                        "User ID: "
-//                                + loginResult.getAccessToken().getUserId()
-//                                + "\n" +
-//                                "Auth Token: "
-//                                + loginResult.getAccessToken().getToken()
-//                );
                 UserDetailsProvider.setUserID(loginResult.getAccessToken().getUserId());
                 UserDetailsProvider.setUserToken(loginResult.getAccessToken().getToken());
 

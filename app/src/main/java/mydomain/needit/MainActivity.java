@@ -155,6 +155,10 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
+
+        if(type.equals(InMemoryDB.Type.USERS)){
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(32.1, 34.87), 13));
+        }
     }
 
     protected void onStart() {
