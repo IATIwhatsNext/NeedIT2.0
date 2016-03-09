@@ -38,6 +38,9 @@ public class HelpSourcesActivity extends AppCompatActivity {
             case R.id.moveBtn:
                 neededHelp = HelpType.MOVING.toString();
                 break;
+            default:
+                neededHelp = ""+ v.getId();
+                break;
         }
 
         //TODO call to server post new  help request - do we have access to location etc?

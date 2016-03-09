@@ -13,25 +13,66 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/userPic"
-        android:layout_marginTop="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="User Info :"
         android:id="@+id/textView"
         android:textStyle="normal|bold|italic"
         android:textColor="#0f7684"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="99dp" />
+        android:textColorHighlight="#020308" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="User Info :"
+        android:id="@+id/userLinkToFacebookTxt"
+        android:textStyle="normal|bold|italic"
+        android:textColor="#0f7684"
+        android:textColorHighlight="#020308"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/userNameTxt"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="User Info :"
+        android:id="@+id/userNameTxt"
+        android:textStyle="normal|bold|italic"
+        android:textColor="#0f7684"
+        android:textColorHighlight="#020308"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Map"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#7af065"
+        android:textColor="#fefafa"
+        android:focusable="true"
+        android:padding="3dp"
+        android:textStyle="bold"
+        android:onClick="onBackToMap"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>

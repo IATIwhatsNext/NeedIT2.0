@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -34,6 +36,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_details);
         Intent intent = getIntent();
         userId = intent.getStringExtra("userId");
+        userToken = intent.getStringExtra("userToken");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -47,7 +50,19 @@ public class UserDetailsActivity extends AppCompatActivity {
                 });
             }
         });
+        if (userToken!= null && userToken.length() > 0) {
+            String[] userInfo = userToken.split(";");
+            TextView faceLink =(TextView) findViewById(R.id.userLinkToFacebookTxt);
+            faceLink.setText("Facebook profile link: "+userInfo[3]);
+            TextView userNameTxt =(TextView) findViewById(R.id.userNameTxt);
+            userNameTxt.setText("First Name: "+ userInfo[0]+ "  Last Name: "+ userInfo[1]);
+        }
     }
+
+    private void onBackToMap(View v) {
+        Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(mainActivity);
+    };
 
     public static Bitmap getFacebookProfilePicture(String userID) {
         Bitmap bitmap = null;
@@ -64,31 +79,6 @@ public class UserDetailsActivity extends AppCompatActivity {
         return bitmap;
     }
 
-//    GraphRequest request = GraphRequest.newMeRequest(
-//            UserDetailsProvider.getUserToken(),
-//            new GraphRequest.GraphJSONObjectCallback() {
-//                @Override
-//                public void onCompleted(
-//                        JSONObject object,
-//                        GraphResponse responseToUser) {
-//                    try {
-//
-//                        userFirstName =  object.getString("first_name");
-//                        userLastName  = object.getString("last_name");
-//                        Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("userFirstName",);
-//                        bundle.putString("userLastName", );
-//                        mainActivity.putExtras(bundle);
-//                        startActivity(mainActivity);
-//                        finish();
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            });
 
 }
 

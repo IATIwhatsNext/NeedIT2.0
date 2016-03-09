@@ -16,6 +16,7 @@ public class AcceptActivity extends Activity {
         Intent userDetailsActivity = new Intent(this, UserDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userId", intent.getStringExtra("userId"));
+        bundle.putString("userToken", intent.getStringExtra("userToken"));
         userDetailsActivity.putExtras(bundle);
         startActivity(userDetailsActivity);
         finish();

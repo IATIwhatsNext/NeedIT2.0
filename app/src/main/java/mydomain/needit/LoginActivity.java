@@ -44,7 +44,7 @@ public class LoginActivity extends FragmentActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 UserDetailsProvider.setUserID(loginResult.getAccessToken().getUserId());
-                UserDetailsProvider.setUserToken(loginResult.getAccessToken().getToken());
+
 
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -54,13 +54,17 @@ public class LoginActivity extends FragmentActivity {
                                     JSONObject object,
                                     GraphResponse response) {
                                 try {
+
+                                    String userInfo =object.getString("first_name")+";"+object.getString("last_name")+object.getString("name")+";"+object.getString("link");
+                                    UserDetailsProvider.setUserToken(userInfo);
+
                                     info.setText("User Name:" + object.getString("last_name") + " " + object.getString("first_name"));
 
                                     Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("userName", object.getString("first_name"));
                                     bundle.putString("userLastName", object.getString("last_name"));
-                                    mainActivity.putExtras(bundle); //Put your id to your next Intent
+                                    mainActivity.putExtras(bundle);
                                     startActivity(mainActivity);
                                     finish();
 
@@ -71,7 +75,7 @@ public class LoginActivity extends FragmentActivity {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,link,first_name,last_name");
+                parameters.putString("fields", "id,name,link,first_name,last_name,about,email,hometown");
                 request.setParameters(parameters);
                 request.executeAsync();
             }

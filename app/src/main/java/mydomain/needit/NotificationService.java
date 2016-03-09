@@ -68,6 +68,7 @@ public class NotificationService extends Service {
                 Intent intentAccept = new Intent(getApplicationContext(), AcceptActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", req.getUserLocation().getUserID());
+                bundle.putString("userToken", req.getUserLocation().getAccessToken());
                 intentAccept.putExtras(bundle);
 
                 PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);
@@ -98,6 +99,7 @@ public class NotificationService extends Service {
                 Intent intentAccept = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", res.getUserLocation().getUserID());
+                bundle.putString("userToken", res.getUserLocation().getAccessToken());
                 intentAccept.putExtras(bundle);
                 intentAccept.setClass(this, UserDetailsActivity.class);
                 PendingIntent pendingIntentAccept = PendingIntent.getActivity(this, 0, intentAccept, 0);
