@@ -1,8 +1,8 @@
 package mydomain.needit;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class HelpSourcesActivity extends AppCompatActivity {
@@ -11,13 +11,13 @@ public class HelpSourcesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_sources);
-      //  getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //  getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setTitle("What help do you need?");
     }
 
     public enum HelpType {
-        COCKROACH,CAR_CABLE,SUGAR,
-     }
+        COCKROACH, CAR_CABLE, SUGAR,
+    }
 
     public void onHelpButtonPress(View v) {
         String neededHelp = "";
@@ -26,7 +26,7 @@ public class HelpSourcesActivity extends AppCompatActivity {
                 neededHelp = HelpType.COCKROACH.toString();
                 break;
             case R.id.carServiceBtn:
-               neededHelp = HelpType.CAR_CABLE.toString();
+                neededHelp = HelpType.CAR_CABLE.toString();
                 break;
             case R.id.classSugarBtn:
                 neededHelp = HelpType.SUGAR.toString();
@@ -34,7 +34,7 @@ public class HelpSourcesActivity extends AppCompatActivity {
         }
 
         //TODO call to server post new  help request - do we have access to location etc?
-       new ServerPostRequestTask().execute(new Request(new UserLocation(UserDetailsProvider.getUserID(), UserDetailsProvider.getUserDetailsProvider().getLocation()), neededHelp)); //todo: need to send real location and ID
+        new ServerPostRequestTask().execute(new Request(new UserLocation(UserDetailsProvider.getUserID(), UserDetailsProvider.getUserDetailsProvider().getLocation()), neededHelp)); //todo: need to send real location and ID
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
     }

@@ -41,12 +41,14 @@ public class UserDetailsProvider extends Activity {
         try {
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             if (mLastLocation != null) {
+                Log.w("location", "new location received");
+
                 return new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             }
         } catch (SecurityException e) {
             Log.e("security", "location permission issue");
         }
-
+        Log.w("location", "sending default location");
         return new LatLng(32.1, 34.87);
     }
 
