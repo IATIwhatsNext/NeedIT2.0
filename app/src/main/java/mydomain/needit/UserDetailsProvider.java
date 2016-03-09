@@ -23,11 +23,21 @@ public class UserDetailsProvider extends Activity {
         UserDetailsProvider.userID = userID;
     }
 
+    public static void setUserToken(String UserToken) {
+        UserDetailsProvider.userToken = UserToken;
+    }
+
     static String userID = "";
+    static String userToken = "";
 
     public static String getUserID() {
         return userID;
     }
+
+    public static String getUserToken() {
+        return userToken;
+    }
+
 
     public static UserDetailsProvider getUserDetailsProvider() {
         if (userDetailsProvider == null) {

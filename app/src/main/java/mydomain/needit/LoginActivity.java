@@ -44,13 +44,13 @@ public class LoginActivity extends FragmentActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
-                info.setText(
-                        "User ID: "
-                                + loginResult.getAccessToken().getUserId()
-                                + "\n" +
-                                "Auth Token: "
-                                + loginResult.getAccessToken().getToken()
-                );
+//                info.setText(
+//                        "User ID: "
+//                                + loginResult.getAccessToken().getUserId()
+//                                + "\n" +
+//                                "Auth Token: "
+//                                + loginResult.getAccessToken().getToken()
+//                );
                 UserDetailsProvider.setUserID(loginResult.getAccessToken().getUserId());
 
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -63,7 +63,7 @@ public class LoginActivity extends FragmentActivity {
                                 try {
                                     info.setText("User Name:" + object.getString("last_name") + " " + object.getString("first_name"));
 
-                                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("userName", object.getString("first_name"));
                                     bundle.putString("userLastName", object.getString("last_name"));

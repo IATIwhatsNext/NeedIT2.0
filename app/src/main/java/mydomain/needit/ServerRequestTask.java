@@ -30,7 +30,7 @@ public class ServerRequestTask extends AsyncTask<MainActivity, String, List<Requ
     @Override
     protected List<Request> doInBackground(MainActivity... params) {
         try {
-            return parseUserJSON(ServerUtil.getFromServer("http://needit2.azurewebsites.net/api/user/requests"));
+            return parseUserJSON(ServerUtil.getFromServer("http://needit2.azurewebsites.net/api/user/requests?id=" + UserDetailsProvider.getUserID()));
         } catch (IOException e) {
             e.printStackTrace();
         }
