@@ -31,4 +31,5 @@
     <string name="moving">Need help in moving</string>
     <string name="navigation">Need help with nevigation</string>
     <string name="sugar">Need glass sugar</string>
+    <string name="help_sources_title">What do you need?</string>
 </resources>

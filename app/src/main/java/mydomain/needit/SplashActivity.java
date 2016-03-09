@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 public class SplashActivity extends Activity {
 
     private static String TAG = SplashActivity.class.getName();
-    private static long SLEEP_TIME = 5;    // Sleep for some time
+    private static long SLEEP_TIME = 3;    // Sleep for some time
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,8 +11,8 @@ public class HelpSourcesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_sources);
-        //  getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setTitle("What help do you need?");
+      //  getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle(R.string.help_sources_title);
     }
 
     public enum HelpType {
