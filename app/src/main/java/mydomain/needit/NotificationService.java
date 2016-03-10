@@ -109,10 +109,10 @@ public class NotificationService extends Service {
                 builder.setSmallIcon(R.drawable.people_logo);
 
                 builder.setAutoCancel(true);
-                builder.addAction(R.drawable.ok, "OK", pendingIntentAccept);
+                builder.addAction(R.drawable.ok, "Show Details", pendingIntentAccept);
                 builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.people_logo));
-                builder.setContentTitle("Need It- Response for help");
-                builder.setContentText("You get Help :)");
+                builder.setContentTitle("Need It- Response for Help");
+                builder.setContentText("You got Help :)");
                 NotificationManager notificationManager = (NotificationManager) getSystemService(
                         NOTIFICATION_SERVICE);
                 notificationManager.notify(NOTIFICATION_RES_ID, builder.build());
